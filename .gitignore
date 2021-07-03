@@ -1,2 +1,7 @@
-env
-env_new
+env/
+env_new/
+frames
+img
+out_frames
+video
+
