@@ -12,7 +12,8 @@ def main():
     while True:
         # Capture frame-by-frame
         ret, frame = video_capture.read()
-        gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        small_frame = cv.resize(frame, (0, 0), fx=0.5, fy=0.5)
+        gray = cv.cvtColor(small_frame, cv.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             gray,
             scaleFactor=1.1,
@@ -22,15 +23,17 @@ def main():
         )
         font = cv.FONT_HERSHEY_SIMPLEX
 
+        print(faces)
+
         # Draw a rectangle around the faces
         for (x, y, w, h) in faces:
-            cv.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv.rectangle(small_frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         # Add face counter to the frame
-        cv.putText(frame, 'People detected: ' + str(len(faces)), (50, 50), font, 1, (0, 255, 255), 2, cv.LINE_4)
+        cv.putText(small_frame, 'People detected: ' + str(len(faces)), (15, 15), font, 0.5, (0, 0, 0), 2, cv.LINE_4)
 
         # Display the resulting frame
-        cv.imshow('Video', frame)
+        cv.imshow('Video', small_frame)
 
         # Exit if 'q' pressed
         if cv.waitKey(1) & 0xFF == ord('q'):
