@@ -12,7 +12,7 @@ class Camera:
         self.face_locations = []
         self.face_encodings = []
         self.face_id = 0
-        self.recognize_timestamp = None
+        self.recognize_timestamp = 0
         self.scale_factor = 0.5
 
     def __del__(self):
