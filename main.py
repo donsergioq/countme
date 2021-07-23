@@ -1,9 +1,7 @@
 from flask import Flask, render_template, Response
 from camera import Camera
 from plotter import Plotter
-from flask import Response
 import datetime
-
 
 app = Flask(__name__)
 
@@ -36,7 +34,9 @@ def gen_video(camera):
         global counter
         global timestamps
         counter.append(len(camera.get_recognized_ids()[1]))
-        timestamps.append(int(datetime.datetime.now().timestamp()))
+        ts = int(datetime.datetime.now().timestamp())
+        readable_ts = datetime.datetime.utcfromtimestamp(ts).strftime('%H:%M:%S')
+        timestamps.append(readable_ts)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
